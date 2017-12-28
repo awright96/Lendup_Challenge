@@ -8,6 +8,7 @@ from make_call import make_call
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from config import Config
+from pymongo import MongoClient
 import os
 
 
@@ -18,6 +19,17 @@ client = Client(account_sid, auth_token)
 
 scheduler = BackgroundScheduler()
 scheduler.start()
+
+db_name = os.environ.get('DB_NAME')
+db_host = os.environ.get('DB_HOST')
+db_port = os.environ.get('DB_PORT')
+db_user = os.environ.get('DB_USER')
+db_pass = os.environ.get('DB_PASS')
+
+db_connection = MongoClient(db_host, db_port)
+db = db_connection[db_name]
+db.authenticate(db_user, db_pass)
+calls = db['calls']
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -67,6 +79,7 @@ def caller():
 @validate_twilio_request
 def incoming():
     resp = VoiceResponse()
+    print(resp.value('From'))
     gather = Gather(action='/gather')
     gather.say("Please insert your fizz buzz number followed by the pound symbol")
     resp.append(gather)
