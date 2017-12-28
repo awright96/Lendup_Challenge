@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 from form import PhoneForm
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from fizz import fizz
@@ -7,6 +7,7 @@ from twilio.rest import Client
 from make_call import make_call
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
+from config import Config
 import os
 
 
@@ -17,6 +18,10 @@ client = Client(account_sid, auth_token)
 
 scheduler = BackgroundScheduler()
 scheduler.start()
+
+app = Flask(__name__)
+app.config.from_object(Config)
+
 
 
 @app.route('/')
@@ -88,5 +93,6 @@ def gath():
 
 if __name__ == '__main__':
     app.run()
+
 
 
