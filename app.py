@@ -26,7 +26,7 @@ app.config.from_object(Config)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return redirect(url_for('caller'))
 
 
 @app.route('/call', methods=['GET', 'POST'])
