@@ -74,8 +74,11 @@ def caller():
 
 
 @app.route('/incoming', methods=['POST'])
+@app.route('/incoming/<phone>')
 @validate_twilio_request
-def incoming():
+def incoming(phone='none'):
+    if phone != 'none':
+        print(phone)
     resp = VoiceResponse()
     print(resp.value('From'))
     gather = Gather(action='/gather')
@@ -105,5 +108,12 @@ def gath():
 if __name__ == '__main__':
     app.run()
 
+
+def RepresentsInt(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 
