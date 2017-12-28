@@ -80,7 +80,7 @@ def incoming(phone='none'):
     if phone != 'none':
         print(phone)
     resp = VoiceResponse()
-    
+
     gather = Gather(action='/gather')
     gather.say("Please insert your fizz buzz number followed by the pound symbol")
     resp.append(gather)
@@ -91,8 +91,11 @@ def incoming(phone='none'):
 
 
 @app.route('/gather', methods=['POST'])
+@app.route('/gather/<phone>', methods=['POST'])
 @validate_twilio_request
-def gath():
+def gath(phone='none'):
+    if phone != 'none':
+        print("gather: " + phone)
     resp = VoiceResponse()
     if 'Digits' in request.values:
         choice = request.values['Digits']
