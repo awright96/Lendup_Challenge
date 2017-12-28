@@ -80,7 +80,7 @@ def incoming(phone='none'):
     if phone != 'none':
         print(phone)
     resp = VoiceResponse()
-    print(resp.value('From'))
+    
     gather = Gather(action='/gather')
     gather.say("Please insert your fizz buzz number followed by the pound symbol")
     resp.append(gather)
