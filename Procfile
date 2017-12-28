@@ -1,1 +1,1 @@
-web gunicorn Lendup_Challenge:app
+web gunicorn app/Lendup_Challenge:app
