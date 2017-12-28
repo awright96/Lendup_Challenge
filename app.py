@@ -21,14 +21,12 @@ scheduler = BackgroundScheduler()
 scheduler.start()
 
 db_name = os.environ.get('DB_NAME')
-db_host = os.environ.get('DB_HOST')
-db_port = os.environ.get('DB_PORT')
-db_user = os.environ.get('DB_USER')
-db_pass = os.environ.get('DB_PASS')
+db_uri  = os.environ.get('DB_URI')
 
-db_connection = MongoClient(db_host, db_port)
+
+db_connection = MongoClient(db_uri)
 db = db_connection[db_name]
-db.authenticate(db_user, db_pass)
+
 calls = db['calls']
 
 app = Flask(__name__)
