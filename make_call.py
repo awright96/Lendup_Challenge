@@ -8,6 +8,6 @@ def make_call(num):
     auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
     my_phone = os.environ.get('TWILIO_PHONE_NUMBER')
     client = Client(account_sid, auth_token)
-    client.calls.create(to=num, from_=my_phone, url='http://lendup-awright.herokuapp.com/incoming')
+    client.calls.create(to=num, from_=my_phone, url='http://lendup-awright.herokuapp.com/incoming/' + num)
 
 
