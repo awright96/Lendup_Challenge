@@ -1,1 +1,1 @@
-web gunicorn Lendup_Challenge.py:app
+web gunicorn Lendup_Challenge:app
