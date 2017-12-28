@@ -1,1 +1,1 @@
-web gunicorn -b 0.0.0.0:5000 app.Lendup_Challenge:app
+web gunicorn app.Lendup_Challenge:app
