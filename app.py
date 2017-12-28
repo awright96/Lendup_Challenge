@@ -77,10 +77,17 @@ def caller():
 @app.route('/incoming/<phone>', methods=['POST'])
 @validate_twilio_request
 def incoming(phone='none'):
+    resp = VoiceResponse()
     if phone != 'none':
         print(phone)
-    resp = VoiceResponse()
+        gather = Gather(action='/gather/' + phone)
+        gather.say("Please insert your fizz buzz number followed by the pound symbol")
+        resp.append(gather)
 
+        resp.redirect('/incoming')
+
+        return str(resp)
+    
     gather = Gather(action='/gather')
     gather.say("Please insert your fizz buzz number followed by the pound symbol")
     resp.append(gather)
