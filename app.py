@@ -74,7 +74,7 @@ def caller():
 
 
 @app.route('/incoming', methods=['POST'])
-@app.route('/incoming/<phone>')
+@app.route('/incoming/<phone>', methods=['POST'])
 @validate_twilio_request
 def incoming(phone='none'):
     if phone != 'none':
