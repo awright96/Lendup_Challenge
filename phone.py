@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, url_for
-from app.form import PhoneForm
+from form import PhoneForm
 from twilio.twiml.voice_response import VoiceResponse, Gather
 from fizz import fizz
 from validator import validate_twilio_request, is_valid_number
