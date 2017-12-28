@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+    <head>
+        <title>Call</title>
+    </head>
+    <body>
+        <h1>Enter Phone Number</h1>
+        <form action="" method="post" name="call">
+
+            {{ form.csrf_token }}
+
+            {% if form.csrf_token.errors %}
+            <div class="warning">You have submitted an invalid CSRF token</div>
+            {% endif %}
+
+            <p>
+                {{ form.phone.label }}<br>
+                {{ form.phone(size=32) }}
+            </p>
+            <p>
+                {{ form.delay.label }}<br>
+                {{ form.delay() }} {{ form.unit() }}
+            </p>
+            <p>
+                {{ form.submit() }}
+            </p>
+            {% if number is defined %}
+                <p>
+                Calling: {{ number }}
+                </p>
+            {% endif %}
+            {% if error is defined %}
+                <p>Sorry, {{ error }} is not a valid phone number.</p>
+            {% endif %}
+        </form>
+    </body>
+{% endblock %}
