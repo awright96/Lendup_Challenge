@@ -24,7 +24,10 @@
             <p>
                 {{ form.submit() }}
             </p>
-            {% if number is defined %}
+
+
+        </form>
+        {% if number is defined %}
                 <p>
                 Calling: {{ number }}
                 </p>
@@ -32,6 +35,7 @@
             {% if error is defined %}
                 <p>Sorry, {{ error }} is not a valid phone number.</p>
             {% endif %}
+            <h2>Call History:</h2><br>
             <table class="table", rules="all">
                <thead>
                 <tr>
@@ -50,7 +54,5 @@
                     {% endfor %}
                 </tbody>
             </table>
-
-        </form>
     </body>
 {% endblock %}
