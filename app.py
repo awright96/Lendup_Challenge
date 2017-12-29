@@ -42,12 +42,12 @@ def hello_world():
 @app.route('/call', methods=['GET', 'POST'])
 def caller():
     form = PhoneForm()
+    call_table = []
+    for call in calls.find():
+        call_table.append(call)
 
     #Serve the form
     if request.method == 'GET':
-        call_table = []
-        for call in calls.find():
-            call_table.append(call)
         return render_template('call.html', form=form, calls=call_table)
 
     #Read from the form
@@ -60,7 +60,7 @@ def caller():
         if is_valid_number(num):
             if time_ == '':
                 make_call(num)
-                return render_template('call.html', form=form, number=num)
+                return render_template('call.html', form=form, number=num, calls=call_table)
             else:
                 delay = str(time_) + unit
                 if unit == 's':
@@ -75,9 +75,9 @@ def caller():
                 if unit == 'd':
                     call_time = datetime.now() + timedelta(days=int(time_))
                     scheduler.add_job(make_call, 'date', run_date=call_time, args=[num, delay])
-            return render_template('call.html', form=form, number=num)
+            return render_template('call.html', form=form, number=num, calls=call_table)
         else:
-            return render_template('call.html', form=form, error=num)
+            return render_template('call.html', form=form, error=num, calls=call_table)
     else:
         return redirect(url_for('caller'))
 
