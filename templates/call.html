@@ -32,22 +32,25 @@
             {% if error is defined %}
                 <p>Sorry, {{ error }} is not a valid phone number.</p>
             {% endif %}
-            <thead>
+            <table class="table">
+               <thead>
                 <tr>
                     <th>Phone Number</th>
                     <th>Delay</th>
                     <th>FizzBuzz Number</th>
                 </tr>
-            </thead> <br>
-            <tbody>
-                {% for call in calls %}
-                    <tr>
-                        <td>{{ call.phone }}</td>
-                        <td>{{ call.delay }}</td>
-                        <td>{{ call.choice }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+               </thead> <br>
+                <tbody>
+                    {% for call in calls %}
+                        <tr>
+                            <td>{{ call.phone }}</td>
+                            <td>{{ call.delay }}</td>
+                            <td>{{ call.choice }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
         </form>
     </body>
 {% endblock %}
