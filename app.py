@@ -9,31 +9,31 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from config import Config
 from pymongo import MongoClient
-import os, pprint
+import os
 
-#Setup for Twilio
+# Setup for Twilio
 account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
 auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
 my_phone = os.environ.get('TWILIO_PHONE_NUMBER')
 client = Client(account_sid, auth_token)
 
-#Setup for the scheduler to make delayed calls
+# Setup for the scheduler to make delayed calls
 scheduler = BackgroundScheduler()
 scheduler.start()
 
-#Setup for database
+# Setup for database
 db_name = os.environ.get('DB_NAME')
 db_uri  = os.environ.get('DB_URI')
 db_connection = MongoClient(db_uri)
 db = db_connection[db_name]
 calls = db['calls']
 
-#Create flask object
+# Create flask object
 app = Flask(__name__)
 app.config.from_object(Config)
 
 
-#Default route, redirects to /call
+# Default route, redirects to /call
 @app.route('/')
 def hello_world():
     return redirect(url_for('caller'))
@@ -46,16 +46,15 @@ def caller():
     for call in calls.find():
         call_table.append(call)
 
-    #Serve the form
+    # Serve the form
     if request.method == 'GET':
         return render_template('call.html', form=form, calls=call_table)
 
-    #Read from the form
+    # Read from the form
     elif request.method == 'POST' and form.validate():
         num = request.form['phone']
         time_ = request.form['delay']
         unit = request.form['unit']
-
 
         if is_valid_number(num):
             if time_ == '':
@@ -81,7 +80,8 @@ def caller():
     else:
         return redirect(url_for('caller'))
 
-#Route for all call processing, including outgoing calls. The 'incoming'
+
+# Route for all call processing, including outgoing calls. The 'incoming'
 #   refers to incoming from Twilio, not just incoming calls
 @app.route('/incoming', methods=['POST'])
 @app.route('/incoming/<phone>:<delay>', methods=['POST'])
@@ -104,6 +104,7 @@ def incoming(phone='none', delay='0s'):
     return str(resp)
 
 
+#  Routing after initial statement has been made
 @app.route('/gather', methods=['POST'])
 @app.route('/gather/<phone>:<delay>', methods=['POST'])
 @validate_twilio_request
@@ -131,12 +132,5 @@ def gath(phone='none', delay='0s'):
 if __name__ == '__main__':
     app.run()
 
-
-def RepresentsInt(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
 
 
