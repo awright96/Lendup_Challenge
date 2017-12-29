@@ -45,9 +45,10 @@ def caller():
 
     #Serve the form
     if request.method == 'GET':
+        call_table = {}
         for call in calls.find():
-            pprint.pprint(call)
-        return render_template('call.html', form=form)
+            call_table.append(call)
+        return render_template('call.html', form=form, calls=call_table)
 
     #Read from the form
     elif request.method == 'POST' and form.validate():
