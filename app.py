@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from config import Config
 from pymongo import MongoClient
-import os
+import os, pprint
 
 #Setup for Twilio
 account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
@@ -45,6 +45,8 @@ def caller():
 
     #Serve the form
     if request.method == 'GET':
+        for call in calls.find():
+            pprint.pprint(call)
         return render_template('call.html', form=form)
 
     #Read from the form
